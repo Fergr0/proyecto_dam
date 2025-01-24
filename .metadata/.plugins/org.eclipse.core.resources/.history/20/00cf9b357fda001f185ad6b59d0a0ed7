@@ -1,0 +1,63 @@
+package com.example.proyectoDam.controller.impl;
+
+import com.example.proyectoDam.controller.UsuarioAPI;
+import com.example.proyectoDam.model.UsuarioDto;
+import com.example.proyectoDam.service.UsuarioService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+public class UsuarioControllerImpl implements UsuarioAPI {
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Override
+    public ResponseEntity<List<UsuarioDto>> getAllUsuarios() {
+        return ResponseEntity.ok(usuarioService.getAllUsuarios());
+    }
+
+    @Override
+    public ResponseEntity<UsuarioDto> getUsuarioById(String id) {
+        return usuarioService.getUsuarioById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<List<UsuarioDto>> findByNombre(String nombre) {
+        return ResponseEntity.ok(usuarioService.findByNombre(nombre));
+    }
+
+    @Override
+    public ResponseEntity<List<UsuarioDto>> findByRol(String rol) {
+        return ResponseEntity.ok(usuarioService.findByRol(rol));
+    }
+
+    @Override
+    public ResponseEntity<UsuarioDto> saveUsuario(UsuarioDto usuario) {
+        return ResponseEntity.ok(usuarioService.save(usuario));
+    }
+
+    @Override
+    public ResponseEntity<UsuarioDto> updateUsuario(String id, UsuarioDto usuario) {
+        usuario.setId(id);
+        return ResponseEntity.ok(usuarioService.updateUsuario(usuario));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteUsuario(String id) {
+        usuarioService.deleteUsuario(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteAllUsuarios() {
+        usuarioService.deleteAllUsuarios();
+        return ResponseEntity.noContent().build();
+    }
+}

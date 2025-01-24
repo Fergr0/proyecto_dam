@@ -1,0 +1,9 @@
+package com.example.proyectoDam.repository;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.example.proyectoDam.model.UsuarioVO;
+
+public interface UsuarioRepository extends MongoRepository<UsuarioVO, ID>{
+
+}

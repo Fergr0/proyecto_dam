@@ -1,0 +1,12 @@
+# Nombre de la base de datos
+spring.data.mongodb.database=nombre_de_tu_base_de_datos
+
+# Dirección del servidor MongoDB
+spring.data.mongodb.host=localhost
+
+# Puerto del servidor MongoDB
+spring.data.mongodb.port=27017
+
+# (Opcional) Usuario y contraseña (si usas autenticación en MongoDB)
+spring.data.mongodb.username=tu_usuario
+spring.data.mongodb.password=tu_contraseña

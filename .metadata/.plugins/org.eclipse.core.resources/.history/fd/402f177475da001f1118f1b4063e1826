@@ -1,0 +1,5 @@
+package com.example.proyectoDam.model;
+
+public class UsuarioVO {
+
+}

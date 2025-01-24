@@ -1,0 +1,34 @@
+package com.example.proyectoDam.service;
+
+import com.example.proyectoDam.model.UsuarioDTO;
+import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface UsuarioService {
+
+    // Obtener todos los usuarios
+    List<UsuarioDTO> getAllUsuarios();
+
+    // Buscar un usuario por ID
+    Optional<UsuarioDTO> getUsuarioById(String id);
+
+    // Buscar usuarios por nombre
+    List<UsuarioDTO> findByNombre(String nombre);
+
+    // Buscar usuarios por rol
+    List<UsuarioDTO> findByRol(String rol);
+
+    // Guardar un usuario
+    UsuarioDTO save(UsuarioDTO usuario);
+
+    // Actualizar un usuario
+    UsuarioDTO updateUsuario(UsuarioDTO usuario);
+
+    // Eliminar un usuario por ID
+    ResponseEntity deleteUsuario(String id);
+
+    // Eliminar todos los usuarios
+    ResponseEntity deleteAllUsuarios();
+}

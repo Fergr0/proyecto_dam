@@ -1,0 +1,5 @@
+package com.example.proyectoDam.repository;
+
+public interface UsuarioRepository {
+
+}

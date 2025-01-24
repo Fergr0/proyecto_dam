@@ -1,0 +1,18 @@
+package com.example.proyectoDam.repository;
+
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.example.proyectoDam.model.UsuarioVO;
+
+public interface UsuarioRepository extends MongoRepository<UsuarioVO, String>{
+
+	
+    List<UsuarioVO> findById(String id);
+    List<UsuarioVO> findAll();
+    Optional<TutorialsVO> getTutorialById(String id);
+    List<TutorialsVO> findByTitleContaining(String title);
+    List<TutorialsVO> findByPublished(Boolean published);
+	
+}

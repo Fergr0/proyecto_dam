@@ -1,0 +1,44 @@
+package com.example.proyectoDam.controller;
+
+import com.example.proyectoDam.model.UsuarioDto;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RequestMapping("/api/usuarios")
+public interface UsuarioAPI {
+
+    // Obtener todos los usuarios
+    @GetMapping
+    ResponseEntity<List<UsuarioDto>> getAllUsuarios();
+
+    // Obtener un usuario por ID
+    @GetMapping("/{id}")
+    ResponseEntity<UsuarioDto> getUsuarioById(@PathVariable String id);
+
+    // Buscar usuarios por nombre
+    @GetMapping("/buscar/nombre/{nombre}")
+    ResponseEntity<List<UsuarioDto>> findByNombre(@PathVariable String nombre);
+
+    // Buscar usuarios por rol
+    @GetMapping("/buscar/rol/{rol}")
+    ResponseEntity<List<UsuarioDto>> findByRol(@PathVariable String rol);
+
+    // Crear un nuevo usuario
+    @PostMapping
+    ResponseEntity<UsuarioDto> saveUsuario(@RequestBody UsuarioDto usuario);
+
+    // Actualizar un usuario existente
+    @PutMapping("/{id}")
+    ResponseEntity<UsuarioDto> updateUsuario(@PathVariable String id, @RequestBody UsuarioDto usuario);
+
+    // Eliminar un usuario por ID
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deleteUsuario(@PathVariable String id);
+
+    // Eliminar todos los usuarios
+    @DeleteMapping
+    ResponseEntity<Void> deleteAllUsuarios();
+}
