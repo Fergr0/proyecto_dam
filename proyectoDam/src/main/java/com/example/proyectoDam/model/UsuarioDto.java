@@ -1,5 +1,7 @@
 package com.example.proyectoDam.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +22,8 @@ public class UsuarioDto {
     private String telefono;
 
     private String rol;
+    
+    private List<String> codigosInstalacionesPermitidas; // Instalaciones a las que tiene acceso
+
+    private String password; // Encriptada
 }

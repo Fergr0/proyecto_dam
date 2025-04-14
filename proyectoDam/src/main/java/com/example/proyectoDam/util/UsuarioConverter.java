@@ -14,12 +14,14 @@ public class UsuarioConverter {
             return null;
         }
         return new UsuarioVO(
-                null, // El ID será generado automáticamente por MongoDB
+                null, // El ID será generado automáticamente por MongoDB al guardar
                 dto.getNombre(),
                 dto.getApellidos(),
                 dto.getMail(),
                 dto.getTelefono(),
-                dto.getRol()
+                dto.getRol(),
+                dto.getCodigosInstalacionesPermitidas(),
+                dto.getPassword()
         );
     }
 
@@ -29,19 +31,21 @@ public class UsuarioConverter {
             return null;
         }
         return new UsuarioDto(
-        		vo.getId(),
+                vo.getId(),
                 vo.getNombre(),
                 vo.getApellidos(),
                 vo.getMail(),
                 vo.getTelefono(),
-                vo.getRol()
+                vo.getRol(),
+                vo.getCodigosInstalacionesPermitidas(),
+                vo.getPassword()
         );
     }
 
     // Convertir lista de UsuarioDto a lista de UsuarioVO
     public static List<UsuarioVO> toVOList(List<UsuarioDto> dtoList) {
         if (dtoList == null || dtoList.isEmpty()) {
-            return List.of(); // Devuelve una lista vacía si la entrada es nula o vacía
+            return List.of(); // Devuelve lista vacía si null o vacía
         }
         return dtoList.stream()
                 .map(UsuarioConverter::toVO)
@@ -51,7 +55,7 @@ public class UsuarioConverter {
     // Convertir lista de UsuarioVO a lista de UsuarioDto
     public static List<UsuarioDto> toDtoList(List<UsuarioVO> voList) {
         if (voList == null || voList.isEmpty()) {
-            return List.of(); // Devuelve una lista vacía si la entrada es nula o vacía
+            return List.of(); // Devuelve lista vacía si null o vacía
         }
         return voList.stream()
                 .map(UsuarioConverter::toDto)

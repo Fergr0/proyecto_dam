@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.proyectoDam.model.UsuarioDto;
@@ -16,6 +17,10 @@ import com.example.proyectoDam.util.UsuarioConverter;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -32,6 +37,38 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Optional<UsuarioDto> getUsuarioById(String id) {
         return usuarioRepository.findById(id)
                 .map(UsuarioConverter::toDto); // Convertir VO a DTO
+    }
+    
+	@Override
+	public Optional<UsuarioDto> findByMail(String mail) {
+		return usuarioRepository.findByMail(mail).map(UsuarioConverter::toDto);
+	}
+	
+    @Override
+    public UsuarioDto registrarUsuario(UsuarioDto usuarioDto) {
+        // Encriptar contraseña antes de guardar
+        usuarioDto.setPassword(passwordEncoder.encode(usuarioDto.getPassword()));
+        UsuarioVO usuarioVO = UsuarioConverter.toVO(usuarioDto);
+        UsuarioVO saved = usuarioRepository.save(usuarioVO);
+        return UsuarioConverter.toDto(saved);
+    }
+
+    @Override
+    public String login(String mail, String password) {
+        Optional<UsuarioVO> optionalUsuario = usuarioRepository.findByMail(mail);
+
+        if (optionalUsuario.isEmpty()) {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+
+        UsuarioVO usuario = optionalUsuario.get();
+
+        if (!passwordEncoder.matches(password, usuario.getPassword())) {
+            throw new RuntimeException("Contraseña incorrecta");
+        }
+
+        // Aquí irá el código para generar el token JWT más adelante
+        return "LOGIN_OK"; // De momento, devuelve algo simple
     }
 
     @Override
@@ -81,5 +118,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuarioRepository.deleteAll();
         return ResponseEntity.noContent().build();
     }
+    
+    
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.proyectoDam.controller.impl;
 
 import com.example.proyectoDam.controller.UsuarioAPI;
+import com.example.proyectoDam.model.LoginRequest;
 import com.example.proyectoDam.model.UsuarioDto;
 import com.example.proyectoDam.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class UsuarioControllerImpl implements UsuarioAPI {
         return ResponseEntity.ok(usuarios);
     }
 
+    
     @Override
     @PostMapping
     public ResponseEntity<UsuarioDto> saveUsuario(@RequestBody UsuarioDto usuarioDto) {
@@ -73,4 +75,18 @@ public class UsuarioControllerImpl implements UsuarioAPI {
         usuarioService.deleteAllUsuarios();
         return ResponseEntity.noContent().build();
     }
+    
+    
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody UsuarioDto usuarioDto) {
+        UsuarioDto nuevo = usuarioService.registrarUsuario(usuarioDto);
+        return ResponseEntity.ok(nuevo);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        String resultado = usuarioService.login(loginRequest.getMail(), loginRequest.getPassword());
+        return ResponseEntity.ok(resultado);
+    }
+    
 }

@@ -1,6 +1,7 @@
 package com.example.proyectoDam.service;
 
 import com.example.proyectoDam.model.UsuarioDto;
+
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -13,6 +14,12 @@ public interface UsuarioService {
 
     // Buscar un usuario por ID
     Optional<UsuarioDto> getUsuarioById(String id);
+    
+    Optional<UsuarioDto> findByMail(String mail);
+    
+    UsuarioDto registrarUsuario(UsuarioDto usuarioDto);
+    
+    String login(String mail, String password);
 
     // Buscar usuarios por nombre
     List<UsuarioDto> findByNombre(String nombre);

@@ -3,6 +3,9 @@ package com.example.proyectoDam.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,4 +27,8 @@ public class UsuarioVO {
     private String telefono;
 
     private String rol;
+    
+    private List<String> codigosInstalacionesPermitidas; // Instalaciones a las que tiene acceso
+
+    private String password; // Encriptada
 }
