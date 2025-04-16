@@ -13,6 +13,7 @@ import com.example.proyectoDam.model.UsuarioDto;
 import com.example.proyectoDam.model.UsuarioVO;
 import com.example.proyectoDam.repository.UsuarioRepository;
 import com.example.proyectoDam.service.UsuarioService;
+import com.example.proyectoDam.util.JwtUtil;
 import com.example.proyectoDam.util.UsuarioConverter;
 
 @Service
@@ -24,6 +25,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @Override
     public List<UsuarioDto> getAllUsuarios() {
@@ -67,8 +71,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new RuntimeException("Contraseña incorrecta");
         }
 
-        // Aquí irá el código para generar el token JWT más adelante
-        return "LOGIN_OK"; // De momento, devuelve algo simple
+        return jwtUtil.generateToken(usuario.getId(), usuario.getRol());
     }
 
     @Override
