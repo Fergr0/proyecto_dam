@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data // Genera automáticamente getters, setters, toString, equals, y hashCode
 @NoArgsConstructor // Constructor vacío
 @AllArgsConstructor // Constructor con todos los argumentos
-@Document(collection = "instalacion") // Mapea esta clase a la colección "usuarios" en MongoDB
+@Document(collection = "instalacion") // Mapea esta clase a la colección "instalacion" en MongoDB
 public class InstalacionVO {
 	
     @Id // Identificador único del documento

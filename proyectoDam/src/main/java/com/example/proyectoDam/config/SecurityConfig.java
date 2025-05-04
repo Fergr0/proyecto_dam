@@ -13,22 +13,28 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
-	@Autowired
-	private JwtFilter jwtFilter;
+    @Autowired
+    private JwtFilter jwtFilter;
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-	    http.csrf().disable()
-	        .authorizeHttpRequests()
-	            .requestMatchers("/api/usuarios/register", "/api/usuarios/login").permitAll()
-	            .anyRequest().authenticated()
-	        .and()
-	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-	        .and()
-	        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+            .authorizeHttpRequests()
+                // Rutas públicas
+                .requestMatchers("/api/usuarios/register", "/api/usuarios/login").permitAll()
 
-	    return http.build();
-	}
+                // Rutas accesibles por usuarios autenticados con rol CLIENTE o ADMIN
+                .requestMatchers("/api/espacios/**").hasAnyRole("ADMIN", "CLIENTE")
+
+                // Resto de rutas: requiere autenticación
+                .anyRequest().authenticated()
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

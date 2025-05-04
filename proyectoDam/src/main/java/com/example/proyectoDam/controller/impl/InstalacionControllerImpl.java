@@ -14,7 +14,7 @@ import java.util.List;
  * Expone los endpoints definidos en la interfaz {@link InstalacionAPI}.
  */
 @RestController
-@RequestMapping("/api/instalaciones") // ¡IMPORTANTE para seguridad y consistencia!
+@RequestMapping("/api/instalaciones") // para seguridad y consistencia
 public class InstalacionControllerImpl implements InstalacionAPI {
 
     @Autowired
