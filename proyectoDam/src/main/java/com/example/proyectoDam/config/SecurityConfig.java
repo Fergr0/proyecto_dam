@@ -23,9 +23,6 @@ public class SecurityConfig {
                 // Rutas públicas
                 .requestMatchers("/api/usuarios/register", "/api/usuarios/login").permitAll()
 
-                // Rutas accesibles por usuarios autenticados con rol CLIENTE o ADMIN
-                .requestMatchers("/api/espacios/**").hasAnyRole("ADMIN", "CLIENTE")
-
                 // Resto de rutas: requiere autenticación
                 .anyRequest().authenticated()
             .and()

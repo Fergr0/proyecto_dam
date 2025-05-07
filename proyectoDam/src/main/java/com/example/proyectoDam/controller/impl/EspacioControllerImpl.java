@@ -22,7 +22,7 @@ public class EspacioControllerImpl implements EspacioAPI {
     private EspacioService espacioService;
 
     @Override
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<EspacioDto>> getAllEspacios() {
         return ResponseEntity.ok(espacioService.getAllEspacios());
     }
