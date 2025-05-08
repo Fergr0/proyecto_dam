@@ -59,13 +59,12 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public String login(String mail, String password) {
-        Optional<UsuarioVO> optionalUsuario = usuarioRepository.findByMail(mail);
+        UsuarioVO usuario = usuarioRepository.findByMail(mail)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        if (optionalUsuario.isEmpty()) {
-            throw new RuntimeException("Usuario no encontrado");
-        }
-
-        UsuarioVO usuario = optionalUsuario.get();
+        System.out.println("Contraseña enviada: " + password);
+        System.out.println("Contraseña en BD: " + usuario.getPassword());
+        System.out.println("Match? " + passwordEncoder.matches(password, usuario.getPassword()));
 
         if (!passwordEncoder.matches(password, usuario.getPassword())) {
             throw new RuntimeException("Contraseña incorrecta");
@@ -73,6 +72,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         return jwtUtil.generateToken(usuario.getId(), usuario.getRol());
     }
+
 
     @Override
     public List<UsuarioDto> findByNombre(String nombre) {
