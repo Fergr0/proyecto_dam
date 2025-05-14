@@ -36,20 +36,27 @@ public class JwtFilter extends OncePerRequestFilter {
                 String userId = jwtUtil.extractUserId(token);
                 String rol = jwtUtil.extractRol(token); // "ADMIN", "CLIENTE", etc.
 
-                // Importante: Spring espera roles como "ROLE_ADMIN"
-                SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + rol.toUpperCase());
+                // Comprobar si rol es null antes de usarlo
+                if (rol != null) {
+                    // Si rol no es null, convertirlo a mayúsculas
+                    SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROL_" + rol.toUpperCase());
 
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userId,
-                        null,
-                        List.of(authority) // ahora sí con el rol incluido
-                );
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                            userId,
+                            null,
+                            List.of(authority)
+                    );
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                } else {
+                    // Si rol es null, puede lanzar un error o manejar la excepción adecuadamente
+                    System.out.println("Error: El rol es null");
+                }
             }
         }
 
         filterChain.doFilter(request, response);
     }
+
 }

@@ -31,7 +31,7 @@ export class LoginComponent {
         next: (token: string) => {
           localStorage.setItem('token', token); // Guarda el JWT
           alert('Login exitoso');
-          this.router.navigate(['/']); // Redirige a donde quieras
+          this.router.navigate(['/home']); // Redirige a donde quieras
         },
         error: (err: any) => {
           alert('Error en login: ' + (err?.error?.message || 'Credenciales incorrectas'));

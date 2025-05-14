@@ -1,0 +1,18 @@
+<div class="search-container">
+    <input 
+      type="text" 
+      [(ngModel)]="searchQuery" 
+      (input)="buscarInstalacion()" 
+      placeholder="Buscar por nombre de instalación" 
+      class="search-input"
+    />
+  </div>
+  
+  <div class="installations-list">
+    <div *ngFor="let instalacion of instalaciones" class="installation-item">
+      <h3>{{ instalacion.nombre }}</h3>
+      <p>{{ instalacion.descripcion }}</p>
+      <!-- Agrega más campos si es necesario -->
+    </div>
+  </div>
+  
